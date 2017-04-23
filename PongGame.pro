@@ -27,13 +27,23 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Menus/mainmenu.cpp \
     Menus/settings.cpp \
-    Game/gameobject.cpp
+    Game/gameobject.cpp \
+    Game/paddle.cpp \
+    Game/ball.cpp \
+    Game/gameobjectcontroller.cpp \
+    Game/playerpaddlecontroller.cpp \
+    Game/aipaddlecontroller.cpp
 
 HEADERS  += \
     mainwindow.h \
     Menus/mainmenu.h \
     Menus/settings.h \
-    Game/gameobject.h
+    Game/gameobject.h \
+    Game/paddle.h \
+    Game/ball.h \
+    Game/gameobjectcontroller.h \
+    Game/playerpaddlecontroller.h \
+    Game/aipaddlecontroller.h
 
 FORMS += \
     mainmenu.ui \

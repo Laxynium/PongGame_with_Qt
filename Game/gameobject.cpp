@@ -1,6 +1,6 @@
-#include "gameobject.h"
+#include "Game/gameobject.h"
 
-GameObject::GameObject(QObject *parent) : QObject(parent)
+GameObject::GameObject(QGraphicsItem*parent):QGraphicsItem(parent)
 {
 
 }

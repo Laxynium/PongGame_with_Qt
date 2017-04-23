@@ -1,17 +1,13 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <QObject>
+#include <QGraphicsItem>
 
-class GameObject : public QObject
+
+class GameObject:public QGraphicsItem
 {
-    Q_OBJECT
 public:
-    explicit GameObject(QObject *parent = 0);
-
-signals:
-
-public slots:
+    GameObject(QGraphicsItem*parent=nullptr);
 };
 
 #endif // GAMEOBJECT_H

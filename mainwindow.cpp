@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <QWidget>
-#include "mainmenu.h"
-#include "settings.h"
+#include "Menus/mainmenu.h"
+#include "Menus/settings.h"
 #include <QVBoxLayout>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),mainMenu(new MainMenu),
