@@ -32,7 +32,9 @@ SOURCES += main.cpp\
     Game/ball.cpp \
     Game/gameobjectcontroller.cpp \
     Game/playerpaddlecontroller.cpp \
-    Game/aipaddlecontroller.cpp
+    Game/aipaddlecontroller.cpp \
+    Game/game.cpp \
+    Game/gamescene.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -43,7 +45,9 @@ HEADERS  += \
     Game/ball.h \
     Game/gameobjectcontroller.h \
     Game/playerpaddlecontroller.h \
-    Game/aipaddlecontroller.h
+    Game/aipaddlecontroller.h \
+    Game/game.h \
+    Game/gamescene.h
 
 FORMS += \
     mainmenu.ui \

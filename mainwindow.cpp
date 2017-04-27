@@ -2,16 +2,21 @@
 #include <QWidget>
 #include "Menus/mainmenu.h"
 #include "Menus/settings.h"
+#include "Game/game.h"
 #include <QVBoxLayout>
+#include <QGraphicsView>
+#include <QAction>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),mainMenu(new MainMenu),
-      settings(new Settings())
+      settings(new Settings()),game(new Game(this))
 {
     setBaseSize(640,480);
-    setFixedSize(640,480);
+   // setFixedSize(640,480);
     widgets.addWidget(mainMenu);
     widgets.addWidget(settings);
+    widgets.addWidget(game->getView());
     setCentralWidget(&widgets);
+    widgets.setCurrentWidget(game->getView());
     connectButtons();
    }
 MainWindow::~MainWindow()

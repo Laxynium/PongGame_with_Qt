@@ -5,6 +5,7 @@
 #include <QStackedWidget>
 class MainMenu;
 class Settings;
+class Game;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -19,6 +20,7 @@ private:
     QStackedWidget widgets;
     MainMenu*mainMenu=nullptr;
     Settings*settings=nullptr;
+    Game*game=nullptr;
 };
 
 #endif // MAINWINDOW_H
