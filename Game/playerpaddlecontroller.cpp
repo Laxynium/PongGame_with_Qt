@@ -3,9 +3,13 @@
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
-PlayerPaddleController::PlayerPaddleController(QObject *parent, std::shared_ptr<GameObject> newControlledObject):GameObjectController(parent)
+#include <QTimer>
+PlayerPaddleController::PlayerPaddleController(QObject *parent, std::shared_ptr<GameObject> newControlledObject):GameObjectController(parent),
+    timer(new QTimer())
 {
-
+    timer->setInterval(15);
+    connect(timer,&QTimer::timeout,this,[this](){QVector2D direction{0,4};
+        controlledObject->move(direction*rev);});
 }
 void PlayerPaddleController::setControlledObject(std::shared_ptr<GameObject> newControlledObject)
 {
@@ -19,20 +23,12 @@ std::shared_ptr<GameObject> PlayerPaddleController::getControlledObject()
 
 void PlayerPaddleController::Tick()
 {
+    //do nothing
     if(!controlledObject)
     {
         qDebug()<<"ControlledObject isn't set\n";
         return ;
     }
-    QVector2D direction{0,4};
-    auto sceneRect=controlledObject->scene()->sceneRect();
-    auto objectRect=controlledObject->boundingRect();
-    objectRect=controlledObject->mapRectToScene(objectRect);
-    if(objectRect.bottom()>=sceneRect.bottom())
-        rev=-1;
-    if(objectRect.top()<=sceneRect.top())
-        rev=1;
-    controlledObject->move(direction*rev);
 }
 
 bool PlayerPaddleController::event(QEvent *event)
@@ -40,16 +36,30 @@ bool PlayerPaddleController::event(QEvent *event)
     if(!(event->type()==QEvent::Type::KeyPress||event->type()==QEvent::Type::KeyRelease))
         return false;
 
+    //TODO This should be moved to other function or class
     QKeyEvent *keyEvent=static_cast<QKeyEvent*>(event);
-   // if(keyEvent->isAutoRepeat())return false;
+    if(keyEvent->isAutoRepeat())return false;
+
     if(keyEvent->key()==Qt::Key_W)
     {
-        controlledObject->move(QVector2D(0,-4));
-    }else
-    if(keyEvent->key()==Qt::Key_S)
-    {
-        controlledObject->move(QVector2D(0,4));
+        rev=-1;
     }
+     if(keyEvent->key()==Qt::Key_S)
+    {
+        rev=1;
+    }
+    if(keyEvent->key()==Qt::Key_W||keyEvent->key()==Qt::Key_S)
+    {
+        if(event->type()==QEvent::Type::KeyPress)
+        {
+            timer->start();
+        }
+        if(event->type()==QEvent::Type::KeyRelease)
+        {
+            timer->stop();
+        }
+    }
+
 
     return true;
 }

@@ -2,7 +2,7 @@
 #define AIPADDLECONTROLLER_H
 
 #include <Game/gameobjectcontroller.h>
-
+class Ball;
 class AIPaddleController:public GameObjectController
 {
     Q_OBJECT
@@ -15,6 +15,7 @@ public slots:
 private:
     int rev=1;
     std::shared_ptr<GameObject>controlledObject;
+    Ball*findBall();
 };
 
 #endif // AIPADDLECONTROLLER_H

@@ -13,9 +13,12 @@ public:
 public slots:
     virtual void Tick() override;
 private:
-    int rev=1;
     std::shared_ptr<GameObject>controlledObject;
 
+    //Variable used to move paddle
+    //they should be in other class
+    class QTimer*timer;
+    int rev=1;
     // QObject interface
 public:
     virtual bool event(QEvent *event) override;

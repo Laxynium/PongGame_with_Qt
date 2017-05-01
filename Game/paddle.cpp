@@ -24,7 +24,6 @@ void Paddle::move(QVector2D direction)
        rect.left()<scenRect.left()||
        rect.right()>=scenRect.right())
     {
-       // qDebug()<<"Here\n";
         return;
     }
 
@@ -34,6 +33,11 @@ void Paddle::move(QVector2D direction)
 void Paddle::setSpeed(QVector2D nSpeed)
 {
     speed=nSpeed;
+}
+
+QVector2D Paddle::getSpeed() const
+{
+    return speed;
 }
 
 void Paddle::init()
@@ -51,6 +55,6 @@ void Paddle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 {
     auto position=scenePos();
     position.toPoint();
-    painter->setBrush(Qt::black);
+    painter->setBrush(Qt::blue);
     painter->drawRect(position.x(),position.y(),width,height);
 }

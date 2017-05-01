@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = PongGame
 TEMPLATE = app
-
+CONFIG += c++14
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -34,7 +34,11 @@ SOURCES += main.cpp\
     Game/playerpaddlecontroller.cpp \
     Game/aipaddlecontroller.cpp \
     Game/game.cpp \
-    Game/gamescene.cpp
+    Game/gamescene.cpp \
+    Game/ballbehaviour.cpp \
+    pausemenu.cpp \
+    Game/gamebackground.cpp \
+    Game/scoreboard.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -47,8 +51,13 @@ HEADERS  += \
     Game/playerpaddlecontroller.h \
     Game/aipaddlecontroller.h \
     Game/game.h \
-    Game/gamescene.h
+    Game/gamescene.h \
+    Game/ballbehaviour.h \
+    pausemenu.h \
+    Game/gamebackground.h \
+    Game/scoreboard.h
 
 FORMS += \
     mainmenu.ui \
-    settings.ui
+    settings.ui \
+    pausemenu.ui
