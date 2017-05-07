@@ -42,9 +42,9 @@ void AIPaddleController::Tick()
 
     //controlledObject->setPos(controlledObject->pos().x(),ballCenter.y()-50);
     //follow ball by paddle
-    if(ball->getBallDirection().x()>0&&ball->pos().x()>120)//Here you can controll how fast is paddle
+    if(ball->getDirection().x()>0&&ball->pos().x()>120)//Here you can controll how fast is paddle
     {
-        if(abs(paddleCenter.y()-ballCenter.y())>controlledObject->getSpeed().y())
+        if(abs(paddleCenter.y()-ballCenter.y())>controlledObject->getVelocity().y())
         {
             if(paddleCenter.y()>ballCenter.y())
             {

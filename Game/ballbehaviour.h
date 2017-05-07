@@ -17,9 +17,11 @@ signals:
     void ballLeftScene(bool onRightSite);
 private:
     std::shared_ptr<GameObject>controlledObject;
-    QVector2D ballDirection{-4,2};
+
+    //variable used to measue times
     qreal colisionDeley=200;
     QTime lastTime;
+    QTime speedUp;
 };
 
 #endif // BALLBEHAVIOUR_H

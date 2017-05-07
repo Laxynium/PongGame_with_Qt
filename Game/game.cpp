@@ -13,6 +13,10 @@
 #include <QCoreApplication>
 #include <QKeyEvent>
 #include <Game/scoreboard.h>
+#include <QResizeEvent>
+#include <QSize>
+#include <random>
+#include <algorithm>
 //TODO make clear logic and names of function
 //resposible for game ending/ game pausing/ game restarting
 Game::Game(QObject *parent) : QObject(parent),
@@ -27,18 +31,22 @@ Game::Game(QObject *parent) : QObject(parent),
     mView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     mView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     mView->setBackgroundBrush(Qt::gray);
+
     InitialiseGame();
+    //connect actions
+    // main loop
     connect(gameLoopTimer,&QTimer::timeout,this,&Game::gameLoop);
-    connect(static_cast<BallBehaviour*>(controllers[2].get()),&BallBehaviour::ballLeftScene,
-            [this](bool onRightSite){(onRightSite?scoreBoard->addPoints(true):scoreBoard->addPoints(false));
-    restartItemsPosition();});
+    //when someone scored
+    connect(static_cast<BallBehaviour*>(controllers[2].get()),&BallBehaviour::ballLeftScene,this,&Game::someOneScored);
+    //when someone won
     connect(scoreBoard,&ScoreBoard::someoneWon,this,&Game::someOneWon);
+
     gameLoopTimer->setInterval(20);
-    mView->scale(2.0,2.0);
 }
 
 void Game::InitialiseGame()
 {
+    //todo extract to functions
     //Create Controllers;
     auto PlayerController=std::make_unique<PlayerPaddleController>();
     auto AIController=std::make_unique<AIPaddleController>();
@@ -75,14 +83,34 @@ void Game::InitialiseGame()
     mScene->addItem(Player_Paddle.get());
     mScene->addItem(AI_Paddle.get());
 
+    //Set default positions
+    gameObjects[0]->setDefaultPosition({145,100});
+    gameObjects[1]->setDefaultPosition({0,100});
+    gameObjects[2]->setDefaultPosition({310,100});
+
     //Set postions
     restartItemsPosition();
 }
 void Game::restartItemsPosition()
 {
-    gameObjects[0]->setPos(145,100);
-    gameObjects[1]->setPos(0,100);
-    gameObjects[2]->setPos(310,100);
+    //think where restaring position should be placed
+    for(auto&object:gameObjects)
+    {
+        object->setPos(object->getDefaultPosition());
+    }
+}
+
+QVector2D Game::randomDirection()
+{
+    std::random_device device;
+    std::mt19937 engin(device());
+    std::uniform_int_distribution<int>Xdistr(30,50);
+    std::uniform_int_distribution<int>Ydistr(10,29);
+    float x=Xdistr(engin);
+    float y=Ydistr(engin);
+    if(y>x)std::swap(x,y);
+    qDebug()<<"X: "<<x<<" Y:"<<y<<endl;
+    return {x,y};
 }
 
 void Game::gameLoop()
@@ -127,6 +155,10 @@ void Game::restartGame()
     startGame();
 }
 
+void Game::resizeGame(double w_scale, double h_scale)
+{
+  mView->scale(w_scale,h_scale);
+}
 
 void Game::startGame()
 {
@@ -142,25 +174,29 @@ void Game::stopGame()
 }
 void Game::someOneWon(bool isPlayer)
 {
-    //TODO emit gameEnded signal
-    //and connect it with gameover screen
-    if(isPlayer)
-    {
-        qDebug()<<"Player won\n";
-    }
-    else
-    {
-        qDebug()<<"AI won\n";
-    }
     scoreBoard->restartPoints();
-    stopGame();
+    isRunning=false;
+    gameLoopTimer->stop();
+    emit gameEnded(isPlayer);
+}
+
+void Game::someOneScored(bool isPlayer)
+{
+    isPlayer?scoreBoard->addPoints(true):scoreBoard->addPoints(false);
+    restartItemsPosition();
+    for(auto&el:gameObjects)
+    {
+        el->init();
+    }
+    auto dir=randomDirection();
+    dir.setX(-dir.x());
+    gameObjects[0]->setDirection(dir);
 }
 
 bool Game::isGameRunning() const
 {
     return isRunning;
 }
-
 
 void Game::SwapControllers()
 {

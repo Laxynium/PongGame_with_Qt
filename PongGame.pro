@@ -24,7 +24,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     Menus/mainmenu.cpp \
     Menus/settings.cpp \
     Game/gameobject.cpp \
@@ -36,12 +35,12 @@ SOURCES += main.cpp\
     Game/game.cpp \
     Game/gamescene.cpp \
     Game/ballbehaviour.cpp \
-    pausemenu.cpp \
     Game/gamebackground.cpp \
-    Game/scoreboard.cpp
+    Game/scoreboard.cpp \
+    Menus/pausemenu.cpp \
+    Menus/mainwindow.cpp
 
 HEADERS  += \
-    mainwindow.h \
     Menus/mainmenu.h \
     Menus/settings.h \
     Game/gameobject.h \
@@ -53,9 +52,10 @@ HEADERS  += \
     Game/game.h \
     Game/gamescene.h \
     Game/ballbehaviour.h \
-    pausemenu.h \
     Game/gamebackground.h \
-    Game/scoreboard.h
+    Game/scoreboard.h \
+    Menus/mainwindow.h \
+    Menus/pausemenu.h
 
 FORMS += \
     mainmenu.ui \

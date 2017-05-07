@@ -32,9 +32,11 @@ void BallBehaviour::Tick()
         return;
     }
 
+    //checks if ball hit top or bottom
    auto sceneRect=controlledObject->scene()->sceneRect();
    auto ballRect=controlledObject->boundingRect();
    ballRect=controlledObject->mapRectToScene(ballRect);
+   auto ballDirection=controlledObject->getDirection();
    if(ballRect.top()<=sceneRect.top())
    {
        ballDirection.setY(-ballDirection.y());
@@ -43,6 +45,7 @@ void BallBehaviour::Tick()
    {
         ballDirection.setY(-ballDirection.y());
    }
+   //checks if ball hit paddle
    auto scene=controlledObject->scene();
    auto items=scene->collidingItems(controlledObject.get());
    if(!items.empty())
@@ -51,13 +54,16 @@ void BallBehaviour::Tick()
        auto currTime=QTime::currentTime();
        if(currTime.msecsSinceStartOfDay()-lastTime.msecsSinceStartOfDay()>colisionDeley)
        {
+            //auto paddle=static_cast<GameObject*>(items[0]);
             ballDirection.setX(-ballDirection.x());
        }
         lastTime=QTime::currentTime();
    }
+
    auto ball=static_cast<Ball*>(controlledObject.get());
-   ball->setBallDirection(ballDirection);
+   ball->setDirection(ballDirection);
    controlledObject->move(ballDirection);
+   //emit signals if ball left scene
    if(ballRect.left()>=sceneRect.right())
    {
         emit ballLeftScene(true);
@@ -66,4 +72,12 @@ void BallBehaviour::Tick()
    {
       emit ballLeftScene(false);
    }
+   //speed up ball to make game more fun
+   if(QTime::currentTime().msecsSinceStartOfDay()-speedUp.msecsSinceStartOfDay()>5000)
+   {
+       if(ball->getSpeed()<7)
+        ball->setSpeed(ball->getSpeed()+0.5);
+        speedUp=QTime::currentTime();
+   }
+
 }

@@ -28,6 +28,10 @@ private:
     Settings*settings=nullptr;
     PauseMenu*pauseMenu=nullptr;
     Game*game=nullptr;
+
+    // QWidget interface
+protected:
+    virtual void resizeEvent(QResizeEvent *event) override;
 };
 
 #endif // MAINWINDOW_H

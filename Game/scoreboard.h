@@ -16,7 +16,7 @@ signals:
 private:
     int player_points=0;
     int AI_points=0;
-    const int score_to_Win=10;
+    const int score_to_Win=5;
 private:
     void updateText();
     // QGraphicsItem interface

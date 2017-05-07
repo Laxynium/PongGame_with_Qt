@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 Paddle::Paddle(QGraphicsItem *parent):GameObject(parent)
 {
-
+    init();
 }
 
 void Paddle::move(QVector2D direction)
@@ -26,23 +26,16 @@ void Paddle::move(QVector2D direction)
     {
         return;
     }
-
     moveBy(direction.x(),direction.y());
-}
-
-void Paddle::setSpeed(QVector2D nSpeed)
-{
-    speed=nSpeed;
-}
-
-QVector2D Paddle::getSpeed() const
-{
-    return speed;
 }
 
 void Paddle::init()
 {
-
+    width=20;
+    height=100;
+    velocity={0,3};
+    speed=3;
+    direction={0,0};
 }
 
 QRectF Paddle::boundingRect() const
@@ -53,6 +46,7 @@ QRectF Paddle::boundingRect() const
 
 void Paddle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);Q_UNUSED(widget);
     auto position=scenePos();
     position.toPoint();
     painter->setBrush(Qt::blue);

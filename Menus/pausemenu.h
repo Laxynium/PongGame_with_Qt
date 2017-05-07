@@ -3,9 +3,6 @@
 
 #include <QWidget>
 #include "ui_pausemenu.h"
-namespace Ui {
-class PauseMenu;
-}
 
 class PauseMenu : public QWidget
 {

@@ -13,35 +13,46 @@ class ScoreBoard;
 class Game : public QObject
 {
     Q_OBJECT
-    // QObject interface
-public:
-    virtual bool event(QEvent *event) override;
 public:
     explicit Game(QObject *parent = 0);
     QGraphicsView *getView()const;
+
+        // QObject interface
+    virtual bool event(QEvent *event) override;
+
 public slots:
     void startGame();
-    void stopGame();
-    bool isGameRunning()const;
     void restartGame();
-
+    void resizeGame(double w_scale,double h_scale);//TODO dont work on android
 signals:
     void gameStopped();
-    void gameEnded(bool playerWon);
+    void gameEnded(bool playerWon);//TODO replace bool with enum
+
 private slots:
-    void SwapControllers();
+    bool isGameRunning()const;
     void gameLoop();
+    void stopGame();
+
+    void SwapControllers();//just for tests TODO remove later
+
+
     void someOneWon(bool isPlayer);
+    void someOneScored(bool isPlayer);
 private:
     void InitialiseGame();
     void restartItemsPosition();
+    QVector2D randomDirection();
+
 private:
 std::vector<std::unique_ptr<GameObjectController>>controllers;
 std::vector<std::shared_ptr<GameObject>>gameObjects;
-GameScene*mScene;
-QGraphicsView*mView;
-ScoreBoard*scoreBoard;
+
+GameScene*mScene=nullptr;
+QGraphicsView*mView=nullptr;
+ScoreBoard*scoreBoard=nullptr;
+
 QTimer*gameLoopTimer=nullptr;
+
 bool isRunning=false;
 
 

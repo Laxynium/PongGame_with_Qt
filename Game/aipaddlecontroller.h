@@ -8,8 +8,8 @@ class AIPaddleController:public GameObjectController
     Q_OBJECT
 public:
     AIPaddleController(QObject*parent=nullptr);
-    void setControlledObject(std::shared_ptr<GameObject> newControlledObject=nullptr);
-    virtual std::shared_ptr<GameObject> getControlledObject();
+    virtual void setControlledObject(std::shared_ptr<GameObject> newControlledObject=nullptr)override;
+    virtual std::shared_ptr<GameObject> getControlledObject()override;
 public slots:
     virtual void Tick() override;
 private:

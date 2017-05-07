@@ -1,20 +1,23 @@
-#include "mainwindow.h"
+#include "Menus/mainwindow.h"
 #include <QWidget>
 #include "Menus/mainmenu.h"
 #include "Menus/settings.h"
-#include "pausemenu.h"
+#include "Menus/pausemenu.h"
 #include "Game/game.h"
 #include <QVBoxLayout>
 #include <QGraphicsView>
 #include <QAction>
 #include <QKeyEvent>
 #include <QThread>
+#include <QDebug>
+#include <QMessageBox>
+#include <qmath.h>
+#include <QDebug>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),mainMenu(new MainMenu(this)),
       settings(new Settings(this)),pauseMenu(new PauseMenu(this)),game(new Game(this))
 {
     setBaseSize(640,480);
-   // setFixedSize(640,480);
     widgets.addWidget(mainMenu);
     widgets.addWidget(settings);
     widgets.addWidget(game->getView());
@@ -48,7 +51,7 @@ void MainWindow::restartGame()
 
 void MainWindow::InitWindowsSizes()
 {
-
+    //
 }
 
 void MainWindow::connectButtons()
@@ -63,9 +66,27 @@ void MainWindow::connectButtons()
     connect(pauseMenuUI.backtomenu_button,&QPushButton::clicked,[this]{widgets.setCurrentIndex(0);});
     auto settingsUI=settings->getUi();
     connect(settingsUI.back_button,&QPushButton::clicked,[this](){widgets.setCurrentWidget(mainMenu);});
-}
 
+}
 void MainWindow::connectToGameSignals()
 {
     connect(game,&Game::gameStopped,this,&MainWindow::stopGame);
+    //TODO create new ui instead of message box
+    connect(game,&Game::gameEnded,[this](bool isPlayerWinner){QMessageBox::information(this,
+        tr("Game ended"),tr(isPlayerWinner?"Congratulations, you won!":"You lost,try next time."),QMessageBox::Ok);widgets.setCurrentIndex(0);});
+
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    //TODO dont work on android
+    auto oldSize=event->oldSize();
+    auto newSize=event->size();
+    auto w_scale=static_cast<double>(newSize.width())/oldSize.width();
+    auto h_scale=static_cast<double>(newSize.height())/oldSize.height();
+
+    if(w_scale>0)
+    {
+       game->resizeGame(h_scale,h_scale);
+    }
 }
