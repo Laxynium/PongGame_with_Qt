@@ -45,12 +45,12 @@ qreal GameObject::getSpeed() const
     return speed;
 }
 
-void GameObject::getWidth() const
+int GameObject::getWidth() const
 {
     return width;
 }
 
-void GameObject::getHeight() const
+int GameObject::getHeight() const
 {
     return height;
 }

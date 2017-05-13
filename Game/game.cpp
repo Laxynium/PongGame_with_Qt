@@ -59,6 +59,7 @@ void Game::InitialiseGame()
     PlayerController->setControlledObject(Player_Paddle);
     AIController->setControlledObject(AI_Paddle);
     ballBehaviour->setControlledObject(ball);
+
     //Store Controllers
     controllers.push_back(std::move(PlayerController));
     controllers.push_back(std::move(AIController));
@@ -90,6 +91,8 @@ void Game::InitialiseGame()
 
     //Set postions
     restartItemsPosition();
+    //Set key to Move
+
 }
 void Game::restartItemsPosition()
 {
@@ -109,7 +112,6 @@ QVector2D Game::randomDirection()
     float x=Xdistr(engin);
     float y=Ydistr(engin);
     if(y>x)std::swap(x,y);
-    qDebug()<<"X: "<<x<<" Y:"<<y<<endl;
     return {x,y};
 }
 
@@ -157,7 +159,28 @@ void Game::restartGame()
 
 void Game::resizeGame(double w_scale, double h_scale)
 {
-  mView->scale(w_scale,h_scale);
+    mView->scale(w_scale,h_scale);
+}
+
+void Game::setKeyToMoveUp(Qt::Key up)
+{
+    if(!controllers.empty())
+    {
+        auto PlayerController=dynamic_cast<PlayerPaddleController*>(controllers[0].get());
+        if(PlayerController)
+        PlayerController->setKeyToMoveUp(up);
+    }
+}
+
+void Game::setKeyToMoveDown(Qt::Key down)
+{
+    if(!controllers.empty())
+    {
+        auto PlayerController=dynamic_cast<PlayerPaddleController*>(controllers[0].get());
+        if(PlayerController)
+        PlayerController->setKeyToMoveDown(down);
+    }
+
 }
 
 void Game::startGame()

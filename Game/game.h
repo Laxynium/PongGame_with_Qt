@@ -24,6 +24,10 @@ public slots:
     void startGame();
     void restartGame();
     void resizeGame(double w_scale,double h_scale);//TODO dont work on android
+
+    void setKeyToMoveUp(Qt::Key up);
+    void setKeyToMoveDown(Qt::Key down);
+
 signals:
     void gameStopped();
     void gameEnded(bool playerWon);//TODO replace bool with enum

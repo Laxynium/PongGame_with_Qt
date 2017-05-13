@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     Game/gamebackground.cpp \
     Game/scoreboard.cpp \
     Menus/pausemenu.cpp \
-    Menus/mainwindow.cpp
+    Menus/mainwindow.cpp \
+    Menus/customkeysequenceedit.cpp
 
 HEADERS  += \
     Menus/mainmenu.h \
@@ -55,7 +56,8 @@ HEADERS  += \
     Game/gamebackground.h \
     Game/scoreboard.h \
     Menus/mainwindow.h \
-    Menus/pausemenu.h
+    Menus/pausemenu.h \
+    Menus/customkeysequenceedit.h
 
 FORMS += \
     mainmenu.ui \

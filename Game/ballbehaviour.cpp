@@ -39,11 +39,11 @@ void BallBehaviour::Tick()
    auto ballDirection=controlledObject->getDirection();
    if(ballRect.top()<=sceneRect.top())
    {
-       ballDirection.setY(-ballDirection.y());
+       ballDirection.setY(ballDirection.y()<0?-ballDirection.y():ballDirection.y());
    }
    if(ballRect.bottom()>=sceneRect.bottom())
    {
-        ballDirection.setY(-ballDirection.y());
+        ballDirection.setY(ballDirection.y()<0?ballDirection.y():-ballDirection.y());
    }
    //checks if ball hit paddle
    auto scene=controlledObject->scene();
@@ -54,8 +54,42 @@ void BallBehaviour::Tick()
        auto currTime=QTime::currentTime();
        if(currTime.msecsSinceStartOfDay()-lastTime.msecsSinceStartOfDay()>colisionDeley)
        {
-            //auto paddle=static_cast<GameObject*>(items[0]);
+            auto paddle=static_cast<GameObject*>(items[0]);
+            auto paddleHeight=paddle->getHeight();
+            auto paddlePos=paddle->pos();
+            paddlePos=paddle->mapToScene(paddlePos);
+            auto ballPos=controlledObject->pos();
+            ballPos=controlledObject->mapToScene(ballPos);
+            auto ballHeight=controlledObject->getHeight();
+            auto part=paddleHeight/ballHeight;
+            auto posDiff=qAbs(paddlePos.y()-ballPos.y());
+            auto whichPart=int(posDiff/ballHeight);
+            switch(whichPart)
+            {
+            case 1:
+                if(ballDirection.y()>0)
+                ballDirection.setY(-ballDirection.y());
+                ballDirection.setY(ballDirection.y()/1.2);
+            case 0:
+                if(ballDirection.y()>0)
+                ballDirection.setY(-ballDirection.y());
+                ballDirection.setY(ballDirection.y()*1.2);
+                break;
+            case 2:
+                if(ballDirection.y()<0)
+                ballDirection.setY(-ballDirection.y());
+                ballDirection.setY(ballDirection.y()/1.2);
+                break;
+            case 3:
+                if(ballDirection.y()<0)
+                ballDirection.setY(-ballDirection.y());
+                ballDirection.setY(ballDirection.y()*1.2);
+                break;
+            default:
+            break;
+            }
             ballDirection.setX(-ballDirection.x());
+
        }
         lastTime=QTime::currentTime();
    }

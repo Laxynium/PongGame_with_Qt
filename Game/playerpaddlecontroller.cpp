@@ -31,24 +31,33 @@ void PlayerPaddleController::Tick()
     }
 }
 
+void PlayerPaddleController::setKeyToMoveUp(Qt::Key up)
+{
+     keyToMoveUp=up;
+}
+
+void PlayerPaddleController::setKeyToMoveDown(Qt::Key down)
+{
+    keyToMoveDown=down;
+}
+
 bool PlayerPaddleController::event(QEvent *event)
 {
     if(!(event->type()==QEvent::Type::KeyPress||event->type()==QEvent::Type::KeyRelease))
         return false;
 
-    //TODO This should be moved to other function or class
     QKeyEvent *keyEvent=static_cast<QKeyEvent*>(event);
     if(keyEvent->isAutoRepeat())return false;
 
-    if(keyEvent->key()==Qt::Key_W)
+    if(keyEvent->key()==keyToMoveUp)
     {
         rev=-1;
     }
-     if(keyEvent->key()==Qt::Key_S)
+     if(keyEvent->key()==keyToMoveDown)
     {
         rev=1;
     }
-    if(keyEvent->key()==Qt::Key_W||keyEvent->key()==Qt::Key_S)
+    if(keyEvent->key()==keyToMoveUp||keyEvent->key()==keyToMoveDown)
     {
         if(event->type()==QEvent::Type::KeyPress)
         {
@@ -59,7 +68,5 @@ bool PlayerPaddleController::event(QEvent *event)
             timer->stop();
         }
     }
-
-
     return true;
 }

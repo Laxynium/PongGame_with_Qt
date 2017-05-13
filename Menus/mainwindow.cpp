@@ -74,7 +74,9 @@ void MainWindow::connectToGameSignals()
     //TODO create new ui instead of message box
     connect(game,&Game::gameEnded,[this](bool isPlayerWinner){QMessageBox::information(this,
         tr("Game ended"),tr(isPlayerWinner?"Congratulations, you won!":"You lost,try next time."),QMessageBox::Ok);widgets.setCurrentIndex(0);});
-
+    //TODO move to other function
+    connect(settings,&Settings::keyToMoveUpChanged,game,&Game::setKeyToMoveUp);
+    connect(settings,&Settings::keyToMoveDownChanged,game,&Game::setKeyToMoveDown);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

@@ -25,8 +25,8 @@ public:
     virtual void setSpeed(qreal Speed);
     virtual qreal getSpeed()const;
 
-    void getWidth()const;
-    void getHeight()const;
+    int getWidth()const;
+    int getHeight()const;
 
 protected:
     QPointF defaultPosition={0,0};
