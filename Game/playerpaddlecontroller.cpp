@@ -5,11 +5,11 @@
 #include <QKeyEvent>
 #include <QTimer>
 PlayerPaddleController::PlayerPaddleController(QObject *parent, std::shared_ptr<GameObject> newControlledObject):GameObjectController(parent),
-    timer(new QTimer())
+    timerHelpingWtihMovement(new QTimer())
 {
-    timer->setInterval(15);
-    connect(timer,&QTimer::timeout,this,[this](){QVector2D direction{0,4};
-        controlledObject->move(direction*rev);});
+    timerHelpingWtihMovement->setInterval(15);
+    connect(timerHelpingWtihMovement,&QTimer::timeout,this,[this](){QVector2D direction{0,4};
+        controlledObject->move(direction*reversal);});
 }
 void PlayerPaddleController::setControlledObject(std::shared_ptr<GameObject> newControlledObject)
 {
@@ -51,21 +51,21 @@ bool PlayerPaddleController::event(QEvent *event)
 
     if(keyEvent->key()==keyToMoveUp)
     {
-        rev=-1;
+        reversal=-1;
     }
      if(keyEvent->key()==keyToMoveDown)
     {
-        rev=1;
+        reversal=1;
     }
     if(keyEvent->key()==keyToMoveUp||keyEvent->key()==keyToMoveDown)
     {
         if(event->type()==QEvent::Type::KeyPress)
         {
-            timer->start();
+            timerHelpingWtihMovement->start();
         }
         if(event->type()==QEvent::Type::KeyRelease)
         {
-            timer->stop();
+            timerHelpingWtihMovement->stop();
         }
     }
     return true;

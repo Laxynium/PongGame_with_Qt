@@ -13,21 +13,21 @@ public:
 
     void setKeyToMoveUp(Qt::Key up);
     void setKeyToMoveDown(Qt::Key down);
-
+public:
+    virtual bool event(QEvent *event) override;
 public slots:
     virtual void Tick() override;
 private:
     std::shared_ptr<GameObject>controlledObject;
 
-    //Variable used to move paddle
+    //Variables used to move paddle
     //they should be in other class
-    class QTimer*timer;
-    int rev=1;
+    class QTimer*timerHelpingWtihMovement;
+    int reversal=1;
     Qt::Key keyToMoveUp=Qt::Key_W;
     Qt::Key keyToMoveDown=Qt::Key_S;
     // QObject interface
-public:
-    virtual bool event(QEvent *event) override;
+
 };
 
 #endif // PLAYERPADDLECONTROLLER_H

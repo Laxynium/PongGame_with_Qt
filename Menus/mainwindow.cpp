@@ -8,7 +8,6 @@
 #include <QGraphicsView>
 #include <QAction>
 #include <QKeyEvent>
-#include <QThread>
 #include <QDebug>
 #include <QMessageBox>
 #include <qmath.h>

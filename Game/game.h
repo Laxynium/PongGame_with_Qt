@@ -16,14 +16,13 @@ class Game : public QObject
 public:
     explicit Game(QObject *parent = 0);
     QGraphicsView *getView()const;
-
-        // QObject interface
+    // QObject interface
     virtual bool event(QEvent *event) override;
 
 public slots:
     void startGame();
     void restartGame();
-    void resizeGame(double w_scale,double h_scale);//TODO dont work on android
+    void resizeGame(double w_scale,double h_scale);
 
     void setKeyToMoveUp(Qt::Key up);
     void setKeyToMoveDown(Qt::Key down);
@@ -37,11 +36,8 @@ private slots:
     void gameLoop();
     void stopGame();
 
-    void SwapControllers();//just for tests TODO remove later
-
-
-    void someOneWon(bool isPlayer);
-    void someOneScored(bool isPlayer);
+    void someoneWon(bool isPlayer);
+    void someoneScored(bool isPlayer);
 private:
     void InitialiseGame();
     void restartItemsPosition();

@@ -18,10 +18,10 @@ signals:
 private:
     std::shared_ptr<GameObject>controlledObject;
 
-    //variable used to measue times
-    qreal colisionDeley=200;
-    QTime lastTime;
-    QTime speedUp;
+    //variables  used to measue times
+    qreal colisionDelay=200;
+    QTime lastMeasuredTime;
+    QTime timeToSpeedUp;
 };
 
 #endif // BALLBEHAVIOUR_H

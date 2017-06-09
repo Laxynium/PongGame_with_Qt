@@ -32,7 +32,7 @@ void ScoreBoard::updateText()
 {
     auto p_p=QString::number(player_points,10);
     auto ai_p=QString::number(AI_points,10);
-    QString text="<html><head/><body><p align='center'><span style=' font-size:50pt; color:#55aaff;'>";
+    QString text="<html><head/><body><p align='center'><span style=' font-size:50pt; color:#ffffff;'>";
     text+=p_p+" : "+ai_p;
     text+="</span></p></body></html>";
     setHtml(text);

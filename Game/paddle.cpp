@@ -14,7 +14,7 @@ void Paddle::move(QVector2D direction)
     auto scenRect=this->scene()->sceneRect();
     auto rect=this->boundingRect();
     rect=mapRectToScene(rect);
-    //change paddle rect to check if after change still is in scene
+    //change paddle rectangle to check if after change still is in scene
     rect.setBottom(rect.bottom()+direction.toPointF().y());
     rect.setTop(rect.top()+direction.toPointF().y());
     rect.setLeft(rect.left()+direction.toPoint().x());
@@ -40,7 +40,7 @@ void Paddle::init()
 
 QRectF Paddle::boundingRect() const
 {
-     auto position=scenePos().toPoint();
+    auto position=scenePos().toPoint();
     return QRectF(position.x(),position.y(),width,height);
 }
 
@@ -49,6 +49,6 @@ void Paddle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     Q_UNUSED(option);Q_UNUSED(widget);
     auto position=scenePos();
     position.toPoint();
-    painter->setBrush(Qt::blue);
+    painter->setBrush(Qt::white);
     painter->drawRect(position.x(),position.y(),width,height);
 }

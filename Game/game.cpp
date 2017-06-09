@@ -37,11 +37,11 @@ Game::Game(QObject *parent) : QObject(parent),
     // main loop
     connect(gameLoopTimer,&QTimer::timeout,this,&Game::gameLoop);
     //when someone scored
-    connect(static_cast<BallBehaviour*>(controllers[2].get()),&BallBehaviour::ballLeftScene,this,&Game::someOneScored);
+    connect(static_cast<BallBehaviour*>(controllers[2].get()),&BallBehaviour::ballLeftScene,this,&Game::someoneScored);
     //when someone won
-    connect(scoreBoard,&ScoreBoard::someoneWon,this,&Game::someOneWon);
+    connect(scoreBoard,&ScoreBoard::someoneWon,this,&Game::someoneWon);
 
-    gameLoopTimer->setInterval(20);
+    gameLoopTimer->setInterval(17);
 }
 
 void Game::InitialiseGame()
@@ -71,7 +71,7 @@ void Game::InitialiseGame()
     //Add game Objects to Scene
     //add background
     auto background=new GameBackground();
-    background->setBrush(Qt::green);
+    background->setBrush(Qt::black);
     background->setRect(0,0,640,480);
     mScene->addItem(background);
     //Add scoreboard
@@ -91,12 +91,10 @@ void Game::InitialiseGame()
 
     //Set postions
     restartItemsPosition();
-    //Set key to Move
 
 }
 void Game::restartItemsPosition()
 {
-    //think where restaring position should be placed
     for(auto&object:gameObjects)
     {
         object->setPos(object->getDefaultPosition());
@@ -195,7 +193,7 @@ void Game::stopGame()
     gameLoopTimer->stop();
     emit gameStopped();
 }
-void Game::someOneWon(bool isPlayer)
+void Game::someoneWon(bool isPlayer)
 {
     scoreBoard->restartPoints();
     isRunning=false;
@@ -203,7 +201,7 @@ void Game::someOneWon(bool isPlayer)
     emit gameEnded(isPlayer);
 }
 
-void Game::someOneScored(bool isPlayer)
+void Game::someoneScored(bool isPlayer)
 {
     isPlayer?scoreBoard->addPoints(true):scoreBoard->addPoints(false);
     restartItemsPosition();
@@ -220,13 +218,5 @@ bool Game::isGameRunning() const
 {
     return isRunning;
 }
-
-void Game::SwapControllers()
-{
-    auto gameObject=controllers[0]->getControlledObject();
-    controllers[0]->setControlledObject(controllers[1]->getControlledObject());
-    controllers[1]->setControlledObject(gameObject);
-}
-
 
 

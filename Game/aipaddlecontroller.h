@@ -13,7 +13,6 @@ public:
 public slots:
     virtual void Tick() override;
 private:
-    int rev=1;
     std::shared_ptr<GameObject>controlledObject;
     Ball*findBall();
 };

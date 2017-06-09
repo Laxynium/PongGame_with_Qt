@@ -52,7 +52,7 @@ void BallBehaviour::Tick()
    {
        //This code solves multireflections
        auto currTime=QTime::currentTime();
-       if(currTime.msecsSinceStartOfDay()-lastTime.msecsSinceStartOfDay()>colisionDeley)
+       if(currTime.msecsSinceStartOfDay()-lastMeasuredTime.msecsSinceStartOfDay()>colisionDelay)
        {
             auto paddle=static_cast<GameObject*>(items[0]);
             auto paddleHeight=paddle->getHeight();
@@ -91,7 +91,7 @@ void BallBehaviour::Tick()
             ballDirection.setX(-ballDirection.x());
 
        }
-        lastTime=QTime::currentTime();
+        lastMeasuredTime=QTime::currentTime();
    }
 
    auto ball=static_cast<Ball*>(controlledObject.get());
@@ -107,11 +107,11 @@ void BallBehaviour::Tick()
       emit ballLeftScene(false);
    }
    //speed up ball to make game more fun
-   if(QTime::currentTime().msecsSinceStartOfDay()-speedUp.msecsSinceStartOfDay()>5000)
+   if(QTime::currentTime().msecsSinceStartOfDay()-timeToSpeedUp.msecsSinceStartOfDay()>5000)
    {
        if(ball->getSpeed()<7)
         ball->setSpeed(ball->getSpeed()+0.5);
-        speedUp=QTime::currentTime();
+        timeToSpeedUp=QTime::currentTime();
    }
 
 }

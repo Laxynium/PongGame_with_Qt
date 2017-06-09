@@ -11,7 +11,6 @@ void Ball::move(QVector2D direction)
 {
     direction.normalize();
     direction*=speed;
-    auto scenRect=this->scene()->sceneRect();
     auto rect=this->boundingRect();
     rect=mapRectToScene(rect);
     moveBy(direction.x(),direction.y());
@@ -39,7 +38,7 @@ void Ball::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     position.toPoint();
     painter->save();
     painter->setPen(Qt::NoPen);
-    painter->setBrush(Qt::red);
+    painter->setBrush(Qt::white);
     painter->drawRoundRect(position.x(),position.y(),width,height);
     painter->restore();
 }
